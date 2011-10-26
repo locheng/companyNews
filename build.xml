@@ -13,6 +13,21 @@
     <property name="junit.report.dir"   location="${report.dir}/junit"/>
     <property name="coverage.report.dir"   location="${report.dir}/coverage"/>
 
+    <target name="clean">
+        <delete dir="${dist.dir}"/>
+        <delete dir="${build.dir}"/>
+        <delete dir="${report.dir}"/>
+    </target>
+
+    <target name="init">
+        <tstamp/>
+        <mkdir dir="${build.dir}/classes"/>
+        <mkdir dir="${build.dir}/test-classes"/>
+        <mkdir dir="${report.dir}"/>
+        <mkdir dir="${junit.report.dir}"/>
+        <mkdir dir="${coverage.report.dir}"/>
+    </target>
+
     <path id="runtime.classpath">
         <fileset dir="lib/apache-tomcat-5.5.28/common/lib">
             <include name="*.jar"/>
@@ -36,16 +51,6 @@
     <path id="coverage.classpath">
         <fileset dir="lib/coverage" includes="**/*.jar"/>
     </path>
-
-    <target name="init">
-        <tstamp/>
-        <mkdir dir="${build.dir}/classes"/>
-        <mkdir dir="${build.dir}/test-classes"/>
-        <mkdir dir="${report.dir}"/>
-        <mkdir dir="${junit.report.dir}"/>
-        <mkdir dir="${coverage.report.dir}"/>
-    </target>
-
 
     <target name="compile" depends="init">
         <!-- includeantruntime="false" is there to make the builds more repeatable -->
@@ -95,10 +100,5 @@
         <antcall target="war"/>
     </target>
 
-    <target name="clean">
-        <delete dir="${dist.dir}"/>
-        <delete dir="${build.dir}"/>
-        <delete dir="${report.dir}"/>
-    </target>
 
 </project>
