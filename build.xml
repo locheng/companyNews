@@ -8,24 +8,26 @@
     <property name="src.dir"    location="src"/>
     <property name="test.dir"   location="test"/>
     <property name="build.dir"  location="build"/>
+    <property name="classes.dir"  location="${build.dir}/classes"/>
+    <property name="test.classes.dir"  location="${build.dir}/test-classes"/>
     <property name="dist.dir"   location="dist"/>
-    <property name="report.dir"   location="${build.dir}/report"/>
+    <property name="report.dir"   location="${build.dir}/reports"/>
     <property name="junit.report.dir"   location="${report.dir}/junit"/>
     <property name="coverage.report.dir"   location="${report.dir}/coverage"/>
+    <property name="instrumented.classes.dir"   location="${build.dir}/instrumented"/>
 
     <target name="clean">
         <delete dir="${dist.dir}"/>
         <delete dir="${build.dir}"/>
-        <delete dir="${report.dir}"/>
     </target>
 
     <target name="init">
         <tstamp/>
-        <mkdir dir="${build.dir}/classes"/>
-        <mkdir dir="${build.dir}/test-classes"/>
-        <mkdir dir="${report.dir}"/>
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${test.classes.dir}"/>
         <mkdir dir="${junit.report.dir}"/>
         <mkdir dir="${coverage.report.dir}"/>
+        <mkdir dir="${instrumented.classes.dir}"/>
     </target>
 
     <path id="runtime.classpath">
@@ -44,17 +46,17 @@
         <pathelement location="lib/testing/junit-4.7.jar"/>
         <path refid="base.classpath"/>
         <path refid="runtime.classpath"/>
-        <pathelement location="${build.dir}/classes"/>
-        <pathelement location="${build.dir}/test-classes"/> 
+        <pathelement location="${classes.dir}"/>
+        <pathelement location="${test.classes.dir}"/> 
     </path>
 
-    <path id="coverage.classpath">
+    <path id="cobertura.classpath">
         <fileset dir="lib/coverage" includes="**/*.jar"/>
     </path>
 
     <target name="compile" depends="init">
         <!-- includeantruntime="false" is there to make the builds more repeatable -->
-        <javac srcdir="${src.dir}" destdir="${build.dir}/classes" includeantruntime="false"> 
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false" debug="true"> 
             <classpath refid="base.classpath"/> 
             <classpath refid="runtime.classpath"/>
         </javac>
@@ -62,27 +64,40 @@
     
     <target name="test-compile" depends="compile">
         <!-- includeantruntime="false" is there to make the builds more repeatable -->
-        <javac srcdir="${test.dir}" destdir="${build.dir}/test-classes" includeantruntime="false">
+        <javac srcdir="${test.dir}" destdir="${test.classes.dir}" includeantruntime="false" debug="true">
             <classpath refid="test.classpath"/> <!-- includes base and runtime classpaths -->
         </javac>
     </target>
 
     <target name="test" depends="test-compile">
-        <junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+        <junit printsummary="yes" haltonfailure="yes" showoutput="yes" fork="yes">
             <classpath refid="test.classpath"/> <!-- includes base and runtime classpaths -->
-            <formatter type="plain" usefile="true"/>
             <formatter type="xml" usefile="true"/>
-            <batchtest fork="yes" todir="${junit.report.dir}">
-                <fileset dir="${build.dir}/test-classes" includes="**/*.class"/>
+            <batchtest todir="${junit.report.dir}">
+                <fileset dir="${test.classes.dir}" includes="**/*.class"/>
             </batchtest>
         </junit>
+    </target>
+
+    <taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
+    <target name="coverage" depends="test">
+        <cobertura-instrument todir="${instrumented.classes.dir}" datafile="${coverage.report.dir}/coverage.ser">
+            <fileset dir="${classes.dir}">
+                <include name="**/*.class"/>
+            </fileset>
+        </cobertura-instrument>
+        <cobertura-report format="xml" datafile="${coverage.report.dir}/coverage.ser" destdir="${coverage.report.dir}">
+            <fileset dir="${src.dir}">
+                <include name="**/*.java" />
+            </fileset>
+        </cobertura-report>
     </target>
 
     <target name="war" depends="test">
         <war destfile="${build.dir}/companynews-${component.version}.war" webxml="WebContent/WEB-INF/web.xml">
             <fileset dir="WebContent" includes="**/*.jsp" />
             <lib dir="WebContent/WEB-INF/lib" />
-            <classes dir="${build.dir}/classes" />
+            <classes dir="${classes.dir}" />
             <classes dir="${src.dir}" includes="**/*.xml"/>
             <manifest>
                 <attribute name="Built-By" value="${user.name}" />
