@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<project name="companyNews" default="compile" basedir=".">
+    <description>
+        the best application in the world
+    </description>
+
+    <path id="compile.classpath">
+        <fileset dir="WebContent/WEB-INF/lib">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <property name="src"    location="src"/>
+    <property name="test"   location="test"/>
+    <property name="build"  location="build"/>
+    <property name="dist"   location="dist"/>
+
+    <target name="init">
+        <tstamp/>
+        <mkdir dir="${build}/classes"/>
+        <mkdir dir="${dist}"/>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src}" destdir="${build}/classes" debug="true">
+            <classpath refid="compile.classpath"/>
+        </javac>
+    </target>
+    
+    <target name="compileTest">
+    </target>
+</project>
