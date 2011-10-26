@@ -4,29 +4,61 @@
         the best application in the world
     </description>
 
-    <path id="compile.classpath">
+    <property name="src.dir"    location="src"/>
+    <property name="test.dir"   location="test"/>
+    <property name="build"  location="build"/>
+    <property name="dist"   location="dist"/>
+
+    <path id="runtime.classpath">
+        <fileset dir="lib/apache-tomcat-5.5.28/common/lib">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <path id="base.classpath">
         <fileset dir="WebContent/WEB-INF/lib">
             <include name="*.jar"/>
         </fileset>
     </path>
 
-    <property name="src"    location="src"/>
-    <property name="test"   location="test"/>
-    <property name="build"  location="build"/>
-    <property name="dist"   location="dist"/>
+    <path id="test.classpath">
+        <pathelement location="lib/junit-4.7.jar"/>
+        <path refid="base.classpath"/>
+        <path refid="runtime.classpath"/>
+        <pathelement location="${build}/classes"/>
+    </path>
 
     <target name="init">
         <tstamp/>
         <mkdir dir="${build}/classes"/>
+        <mkdir dir="${build}/test-classes"/>
         <mkdir dir="${dist}"/>
     </target>
 
+
     <target name="compile" depends="init">
-        <javac srcdir="${src}" destdir="${build}/classes" debug="true">
-            <classpath refid="compile.classpath"/>
+        <javac srcdir="${src.dir}" destdir="${build}/classes" includeantruntime="false">
+            <classpath refid="base.classpath"/> 
+            <classpath refid="runtime.classpath"/>
         </javac>
     </target>
     
-    <target name="compileTest">
+    <target name="test-compile" depends="compile">
+        <javac srcdir="${test.dir}" destdir="${build}/test-classes" includeantruntime="false">
+            <classpath refid="test.classpath"/> <!-- includes base and runtime classpaths -->
+        </javac>
     </target>
+
+    <target name="war" depends="test-compile">
+        <war destfile="${build}/companyNews.war" webxml="WebContent/WEB-INF/web.xml">
+            <fileset dir="WebContent" includes="**/*.jsp" />
+            <lib dir="WebContent/WEB-INF/lib" />
+            <classes dir="${build}/classes" />
+        </war>
+    </target>
+    <target name="clean">
+        <delete dir="${dist}"/>
+        <delete dir="${build}"/>
+    </target>
+
 </project>
