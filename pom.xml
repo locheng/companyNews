@@ -6,6 +6,11 @@
     <version>1.0-SNAPSHOT</version>
     <name>Company News blog</name>
     <url>http://maven.apache.org</url>
+    <scm>
+        <connection>scm:git:git@github.com:feniix/companyNews.git</connection>
+        <url>scm:git:git@github.com:feniix/companyNews.git</url>
+        <developerConnection>scm:git:git@github.com:feniix/companyNews.git</developerConnection>
+    </scm>
     <distributionManagement>
         <repository>
             <uniqueVersion>false</uniqueVersion>
