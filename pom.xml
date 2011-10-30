@@ -96,6 +96,11 @@
                         <containerId>tomcat5x</containerId>
                         <home>${project.basedir}/cargo/tomcat55</home>
                     </container>
+                    <configuration>
+                        <properties>
+                            <cargo.servlet.port>8888</cargo.servlet.port>
+                        </properties>
+                    </configuration>
                 </configuration>
                 <executions>
                     <execution>
