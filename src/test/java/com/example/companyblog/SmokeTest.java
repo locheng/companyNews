@@ -5,6 +5,7 @@ package com.example.companyblog;
 
 import org.junit.Test;
 import org.junit.Before;
+import static org.junit.Assert.fail;
 import static org.junit.Assert.assertEquals;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -20,7 +21,9 @@ public class SmokeTest {
     @Before
     public void setupBaseUrl() {
         String TomcatPort = System.getProperty("TOMCATPORT");
-
+        if(TomcatPort.isEmpty()){
+            fail("TOMCATPORT System property does not exist");
+        }
         this.baseUrl = new String("http://localhost:" + TomcatPort);
     }
 
