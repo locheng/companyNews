@@ -5,6 +5,7 @@
     <packaging>war</packaging>
     <version>1.3-SNAPSHOT</version>
     <name>Company News blog</name>
+
     <properties>
         <encoding>UTF-8</encoding>
     </properties>
