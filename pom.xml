@@ -101,6 +101,7 @@
 						<properties>
                             <cargo.servlet.port>${env.TOMCATPORT}</cargo.servlet.port>
 						</properties>
+
 					</configuration>
 				</configuration>
 				<executions>
