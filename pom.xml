@@ -111,7 +111,6 @@
                             <goal>start</goal>
                         </goals>
                     </execution>
-
                     <execution>
                         <id>stop-container</id>
                         <phase>post-integration-test</phase>
