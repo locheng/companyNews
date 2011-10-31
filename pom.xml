@@ -100,7 +100,7 @@
 					</container>
 					<configuration>
 						<properties>
-                            <cargo.servlet.port>${TOMCATPORT}</cargo.servlet.port>
+                            <cargo.servlet.port>${env.TOMCATPORT}</cargo.servlet.port>
 						</properties>
 					</configuration>
 				</configuration>

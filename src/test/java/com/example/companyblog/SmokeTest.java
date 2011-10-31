@@ -20,9 +20,9 @@ public class SmokeTest {
 
     @Before
     public void setupBaseUrl() {
-        String TomcatPort = System.getProperty("TOMCATPORT");
-        if(TomcatPort.isEmpty()){
-            fail("TOMCATPORT System property does not exist");
+        String TomcatPort = System.getenv("TOMCATPORT");
+        if (TomcatPort.isEmpty()) {
+            fail("Environment variable 'TOMCATPORT' does not exist");
         }
         this.baseUrl = new String("http://localhost:" + TomcatPort);
     }
@@ -31,14 +31,10 @@ public class SmokeTest {
     public void appComesUpAndCanReadHomePageTest() throws Exception {
         WebClient browser = new WebClient();
         HtmlPage mainPage = browser.getPage(this.baseUrl);
-        String FirstH1Occurrence = mainPage.getBody().getElementsByTagName("h1").get(0).getTextContent();
+        String FirstH1Occurrence = mainPage.getBody().getElementsByTagName("h1").get(0)
+                .getTextContent();
 
         assertEquals(FirstH1Occurrence, "Welcome to Company!");
     }
 
-    //@Test
-    //public void canReadBlogPostTest() throws Exception {
-    //    String baseUrl = this.baseUrl;
-    //    
-    //}
 }
