@@ -17,7 +17,7 @@ public class PostCommand implements Transaction {
         this.title = title;
         this.body = body;
     }
-    
+
     public void executeOn(Object prevalentSystem, Date executionTime) {
         Blog blog = (Blog) prevalentSystem;
         blog.postArticle(new Article(title, body, new Date()));

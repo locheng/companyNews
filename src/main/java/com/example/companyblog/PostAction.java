@@ -4,7 +4,7 @@ import com.example.companyblog.model.PostCommand;
 
 @SuppressWarnings("serial")
 public class PostAction extends BlogAction {
-    
+
     private String body;
     private String title;
 
@@ -32,5 +32,5 @@ public class PostAction extends BlogAction {
     public void setTitle(String title) {
         this.title = title;
     }
-    
+
 }

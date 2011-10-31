@@ -16,7 +16,6 @@ import com.example.companyblog.model.Blog;
 
 import static com.example.companyblog.AppConstants.*;
 
-
 public class BlogListener implements ServletContextListener {
 
     Prevayler prevayler;

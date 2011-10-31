@@ -12,7 +12,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 @SuppressWarnings("serial")
 public abstract class BlogAction extends ActionSupport {
-    
+
     public Blog blog() {
         return (Blog) prevayler().prevalentSystem();
     }
