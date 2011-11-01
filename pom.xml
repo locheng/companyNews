@@ -141,12 +141,31 @@
 				</configuration>
 				<executions>
 					<execution>
+						<!-- one execution for normal unit tests -->
+						<id>test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<skip>false</skip>
+							<excludes>
+								<exclude>com/example/companyblog/acceptance/*.java</exclude>
+							</excludes>
+						</configuration>
+					</execution>
+					<execution>
+						<!-- one execution for in container unit tests -->
+						<id>acceptance</id>
 						<phase>integration-test</phase>
 						<goals>
 							<goal>test</goal>
 						</goals>
 						<configuration>
 							<skip>false</skip>
+							<includes>
+							    <include>com/example/companyblog/acceptance/*.java</include>
+							</includes>
 						</configuration>
 					</execution>
 				</executions>

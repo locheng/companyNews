@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.example.companyblog;
+package com.example.companyblog.acceptance;
 
 
 import static org.junit.Assert.*;
