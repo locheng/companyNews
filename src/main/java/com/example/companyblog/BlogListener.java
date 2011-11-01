@@ -26,10 +26,10 @@ public class BlogListener implements ServletContextListener {
         final String USER_HOME = System.getProperty("user.home");
         String DBPATH = null;
 
-        if (DBDATADIR.isEmpty()) {
-            DBPATH = new String(USER_HOME + File.separatorChar + "companynews/data");
-        } else {
+        if (DBDATADIR != null) {
             DBPATH = new String(DBDATADIR + File.separatorChar + "companynews/data");
+        } else {
+            DBPATH = new String(USER_HOME + File.separatorChar + "companynews/data");
         }
         System.out.println("Setting up the path to " + DBPATH);
         File DBFILE = new File(DBPATH);
