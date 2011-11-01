@@ -8,8 +8,15 @@ Whatching those presentation inspired me (I stole the ideas) to try to do someth
 
 Basically it works this way:
 
-1. The developers work in topic/feature branches. Upon completion of the coding and testing of those branches the code is merged into `master`.
-2. The CI server (http://ci-companynews.feniix-hq.net)
+1. The developers work in topic/feature branches (these are build continuously by the CI server).
+2. Upon completion of the coding and testing of those branches the code is merged into `master`.
+3. The [CI server](http://ci-companynews.feniix-hq.net) builds the integration branch and emails the QA team.
+4. The QA team can then decide to deploy to the [QA app server](http://qa-companynews.feniix-hq.net) by going into the [Build Pipeline View](http://ci-companynews.feniix-hq.net/view/Build_Pipeline/) and pressing trigger button.
+5. After reviewing and approving the build the QA team and email the operations team and they can press the trigger button to release to production, what will happen then is that the ci server will build the application, release to maven(tagging the release in the scm) and promoto to the production server if all the steps are completed successfully.
+
+I started by doing an [ant build](https://github.com/feniix/companyNews/tree/antbuild) although I had never had to create an ant build from scratch it was not too difficult, but it started growing larger than I expected so I decided to switch to maven and using nexus as artifact repository, I chose to use nexus and not artifactory because I like the simplicity of installation of nexus.
+I modified the code to be able to chose the location of the database storage because it had the developers home directory hardcoded, that helped a bit with the deployment in different environments.
+I envision having more build pipelines doing continuous deployment and running automated ui testing using selenium-rc and grid in several development environments. I also envision some sort of database migrations process but I do not know enough programming to do that. I also would recommend to configure the security settings to the CI server to enforce that not anybody can launch any job.
 
 Code repositories
 -----------------
