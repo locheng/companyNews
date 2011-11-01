@@ -82,7 +82,7 @@ Developer environment
     * maven 3.0.0 (to perform the local build)
     * in the local environment they have to setup a variable "TOMCATPORT" with a free port (that will be used to start the local 
      tomcat)
-    * have the same settings.xml that can be found in /home/brummie/.m2/settings.xml (this sets maven to use the right repository 
+    * the settings.xml can be found in [settings.xml](https://github.com/feniix/companyNews/blob/master/developer-env/settings.xml) (this sets maven to use the right repository 
      to pull the dependencies)
 
 Development workflow
