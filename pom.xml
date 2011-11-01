@@ -3,7 +3,7 @@
     <groupId>com.example</groupId>
     <artifactId>companyblog</artifactId>
     <packaging>war</packaging>
-    <version>1.5-SNAPSHOT</version>
+    <version>1.5</version>
     <name>Company News blog</name>
     <properties>
         <encoding>UTF-8</encoding>
