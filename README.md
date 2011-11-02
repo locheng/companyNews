@@ -17,6 +17,18 @@ Basically it works this way:
 I started by doing an [ant build](https://github.com/feniix/companyNews/tree/antbuild) although I had never had to create an ant build from scratch it was not too difficult, but it started growing larger than I expected so I decided to switch to maven and using nexus as artifact repository, I chose to use nexus and not artifactory because I like the simplicity of installation of nexus.
 I modified the code to be able to chose the location of the database storage because it had the developers home directory hardcoded, that helped a bit with the deployment in different environments.
 I envision having more build pipelines doing continuous deployment and running automated ui testing using selenium-rc and grid in several development environments. I also envision some sort of database migrations process but I do not know enough programming to do that. I also would recommend to configure the security settings to the CI server to enforce that not anybody can launch any job.
+I did not have time to setup the prod and qa server to start on boot (as a service) so if the machine is rebooted the instances have to be manually restarted.
+
+
+Summary Information
+-------------------
+* code repo: https://github.com/feniix/companyNews 
+* ci server: http://ci-companynews.feniix-hq.net ids: admin/admin qauser1/qauser1 devuser1/devuser1 opuser1/opuser1
+* artifact repository: http://repo-companynews.feniix-hq.net ids: admin/admin1
+* qa server: http://qa-companynews.feniix-hq.net (if it is stopped: log in as brummie, sudo su - companynewsqa, ./tomcat/bin/startup.sh)
+* prod server: http://companynews.feniix-hq.net (if it is stopped: log in as brummie, sudo su - companynews, ./tomcat/bin/startup.sh)
+
+
 
 Code repositories
 -----------------
